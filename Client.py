@@ -3,18 +3,26 @@ import ipaddress
 
 # main function for client driver
 if __name__ == "__main__":
-    # recieves input from user about the desired IP address and port number
-    ip_dest = input("Target IP address: ")
-    port_dest = int(input("Target Port: "))     # convert input for the port into an integer
-
-    # prompts user to input the message they would like to send
-    message = input("Message: ")
-
     # creates the TCP socket
     myTCPSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    # connects to the server
-    myTCPSocket.connect((ip_dest, port_dest))
+    # loops until user successfully connects ona  valid port and address
+    while True:
+        # recieves input from user about the desired IP address and port number
+        ip_dest = input("Target IP address: ")
+        port_dest = int(input("Target Port: "))     # convert input for the port into an integer
+
+        # attempts to make connection to server
+        try:
+            # connects to the server
+            myTCPSocket.connect((ip_dest, port_dest))
+            break
+        except:
+            print("The given IP address or port was invalid, try again.\n")
+
+    # prompts user to input the message they would like to send
+    print("Connection Successful")
+    message = input("Message: ")
 
     # continuous loop to allow multiple messages to be sent
     while True:
